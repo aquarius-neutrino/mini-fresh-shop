@@ -1,0 +1,9 @@
+<view class="safe-bottom">
+  <van-button type="primary" bindtap="testRequest">拉取用户信息</van-button>
+  <van-button type="danger" bindtap="handleLogout">退出登录</van-button>
+  <view wx:if="{{user}}">
+  <text>昵称：{{user.nickName}}</text>
+  <image src="{{user.avatar}}" style="width:100rpx;height:100rpx"></image>
+  </view>
+  <view wx:else>未登录</view>
+</view>

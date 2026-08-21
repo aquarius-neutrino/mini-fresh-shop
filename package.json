@@ -1,18 +1,24 @@
 {
-  "name": "mini-fresh-shop",
+  "name": "miniprogram-ts-quickstart",
   "version": "1.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "watch": "vite build --watch"
-  },
-  "dependencies": {
-    "@vant/weapp": "^1.10.7"
-  },
+  "description": "",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "sass": "^1.77.8",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.8",
-    "vite-plugin-wechat-mp": "^1.1.16"
+    "miniprogram-api-typings": "^2.8.3-1"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquarius-neutrino/mini-fresh-shop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aquarius-neutrino/mini-fresh-shop/issues"
+  },
+  "homepage": "https://github.com/aquarius-neutrino/mini-fresh-shop#readme",
+  "dependencies": {
+    "@vant/weapp": "^1.11.7"
   }
 }
