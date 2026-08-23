@@ -1,4 +1,5 @@
 <!-- 分类横向滚动 -->
+<van-button bindtap="toCart" style="margin-left:300px;color:red;">去购物车</van-button>
 <scroll-view scroll-x class="category-scroll">
   <view class="category-list">
     <view 
@@ -13,7 +14,6 @@
     </view>
   </view>
 </scroll-view>
-
 <!-- 商品列表 -->
 <scroll-view 
   scroll-y 

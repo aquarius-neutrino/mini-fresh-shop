@@ -1,7 +1,7 @@
 import { getGoodsListApi, getCategoryListApi } from '../../api/goods'
 import { debounce } from '../../utils/common'
 import type { GoodsItem, CategoryItem, PageParams } from '../../types'
-
+import { cartStore } from '../../store/cart'
 // 页面data类型
 type PageData = {
   categoryList: CategoryItem[]
@@ -23,6 +23,7 @@ type PageMethods = {
   loadMore: () => void
   onRefresh: () => Promise<void>
   handleAddCart: (e: WechatMiniprogram.CustomEvent) => void
+  toCart:()=>void
 }
 
 // Page仅2个泛型参数 <Data, Methods>
@@ -42,7 +43,12 @@ Page<PageData, PageMethods>({
     // 此处无红线，类型完全匹配
     this.changeCate = debounce(this.handleCateChange.bind(this), 300)
   },
-
+  // 跳转购物车
+  toCart() {
+    wx.navigateTo({
+      url: '/subPackages/cart/index'
+    })
+  },
   // 真实分类切换逻辑
   async handleCateChange(e: WechatMiniprogram.Touch) {
     const cateId = e.currentTarget.dataset.id
@@ -92,7 +98,9 @@ Page<PageData, PageMethods>({
   },
 
   handleAddCart(e: WechatMiniprogram.CustomEvent) {
-    const goods = e.detail
-    wx.showToast({ title: `已添加${goods.title.slice(0,4)}...` })
-  }
+    const goods = e.detail as GoodsItem
+    cartStore.addGoods(goods)
+    wx.showToast({ title: `已添加${goods.title.slice(0,6)}...` })
+  },
+  
 })

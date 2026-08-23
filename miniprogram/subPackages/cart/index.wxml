@@ -1,0 +1,23 @@
+<view wx:if="{{cartList.length === 0}}" class="empty-box">
+  <text>购物车暂无商品</text>
+</view>
+
+<view wx:else>
+  <view wx:for="{{cartList}}" wx:key="id" class="cart-item">
+    <van-checkbox value="{{item.selected}}" bindchange="toggleSelect" data-id="{{item.id}}"></van-checkbox>
+    <image class="cover" src="{{item.cover}}"></image>
+    <view class="info">
+      <text class="title">{{item.title}}</text>
+      <text class="price">{{formatMoney(item.price)}}</text>
+      <van-stepper value="{{item.count}}" bindchange="changeCount" data-id="{{item.id}}" min="1"></van-stepper>
+    </view>
+  </view>
+
+  <view class="cart-bottom safe-bottom">
+    <van-checkbox value="{{isAllSelected}}" bindchange="toggleAll">全选</van-checkbox>
+    <view class="total">
+      <text>合计：<text class="red">{{totalPrice}}</text></text>
+      <van-button type="danger" bindtap="goPay">结算({{selectedNum}})</van-button>
+    </view>
+  </view>
+</view>
