@@ -1,9 +1,36 @@
-<view class="safe-bottom">
-  <van-button type="primary" bindtap="testRequest">拉取用户信息</van-button>
-  <van-button type="danger" bindtap="handleLogout">退出登录</van-button>
-  <view wx:if="{{user}}">
-  <text>昵称：{{user.nickName}}</text>
-  <image src="{{user.avatar}}" style="width:100rpx;height:100rpx"></image>
+<!-- 分类横向滚动 -->
+<scroll-view scroll-x class="category-scroll">
+  <view class="category-list">
+    <view 
+      wx:for="{{categoryList}}" 
+      wx:key="id"
+      class="category-item {{curCateId === item.id ? 'active' : ''}}"
+      bindtap="changeCate"
+      data-id="{{item.id}}"
+    >
+      <image src="{{item.icon}}" class="cate-icon"></image>
+      <text>{{item.name}}</text>
+    </view>
   </view>
-  <view wx:else>未登录</view>
-</view>
+</scroll-view>
+
+<!-- 商品列表 -->
+<scroll-view 
+  scroll-y 
+  class="goods-wrap"
+  bindscrolltolower="loadMore"
+  refresher-enabled
+  bindrefresherrefresh="onRefresh"
+  refresher-triggered="{{refreshing}}"
+>
+  <view wx:if="{{goodsList.length === 0}}">暂无商品</view>
+  <view wx:else>
+    <block wx:for="{{goodsList}}" wx:key="id">
+      <GoodsCard item="{{item}}" bindaddcart="handleAddCart"/>
+    </block>
+  </view>
+  <view class="load-tip" wx:if="{{goodsList.length > 0}}">
+    <text wx:if="{{hasMore}}">上拉加载更多</text>
+    <text wx:else>没有更多商品了</text>
+  </view>
+</scroll-view>

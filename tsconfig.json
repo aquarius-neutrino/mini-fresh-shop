@@ -1,25 +1,14 @@
 {
   "compilerOptions": {
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "module": "CommonJS",
-    "target": "ES2020",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "alwaysStrict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ES6", "DOM"],
     "strict": true,
-    "strictPropertyInitialization": true,
-    "lib": ["ES2020"],
-    "typeRoots": [
-      "./typings"
-    ]
+    "typeRoots": ["./node_modules/miniprogram-api-typings", "./typings"],
+    "types": ["miniprogram-api-typings"],
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": [
     "./**/*.ts"

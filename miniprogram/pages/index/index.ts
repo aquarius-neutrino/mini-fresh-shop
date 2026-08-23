@@ -1,60 +1,98 @@
-// 首页测试调用接口,用来验证封装的请求拦截器是否生效
-//直接读取全局用户
-//订阅监听用户登录 / 退出状态变化
-import { getUserInfoApi } from '../../api/user'
-import { userStore } from '../../store/user'
-import { UserInfo } from '../../types'
-import {  throttle, debounce, formatMoney, maskPhone, formatTime, isEmpty} from '../../utils/common'
-Page({
-  data:{
-    // 注册小程序页面，并声明页面私有数据 user，初始为空，TS 约束类型为用户对象或 null；
-    user:null as UserInfo | null
+import { getGoodsListApi, getCategoryListApi } from '../../api/goods'
+import { debounce } from '../../utils/common'
+import type { GoodsItem, CategoryItem, PageParams } from '../../types'
+
+// 页面data类型
+type PageData = {
+  categoryList: CategoryItem[]
+  curCateId: string
+  goodsList: GoodsItem[]
+  page: number
+  pageSize: number
+  hasMore: boolean
+  refreshing: boolean
+}
+
+// 页面所有方法类型约束
+type PageMethods = {
+  initPage: () => Promise<void>
+  getCategory: () => Promise<void>
+  getGoodsList: (isReset: boolean) => Promise<void>
+  handleCateChange: (e: WechatMiniprogram.Touch) => Promise<void>
+  changeCate: (e: WechatMiniprogram.Touch) => void
+  loadMore: () => void
+  onRefresh: () => Promise<void>
+  handleAddCart: (e: WechatMiniprogram.CustomEvent) => void
+}
+
+// Page仅2个泛型参数 <Data, Methods>
+Page<PageData, PageMethods>({
+  data: {
+    categoryList: [] as CategoryItem[],
+    curCateId: 'c1',
+    goodsList: [] as GoodsItem[],
+    page: 1,
+    pageSize: 6,
+    hasMore: true,
+    refreshing: false
   },
-  // 取消订阅函数，页面卸载时执行
-  unwatchUser:null as (()=>void) | null,
-  onLoad(){
-    // 直接读取当前全局用户
-    const user = userStore.state
-    if(user){
-      this.setData({user})
+
+  onLoad() {
+    this.initPage()
+    // 此处无红线，类型完全匹配
+    this.changeCate = debounce(this.handleCateChange.bind(this), 300)
+  },
+
+  // 真实分类切换逻辑
+  async handleCateChange(e: WechatMiniprogram.Touch) {
+    const cateId = e.currentTarget.dataset.id
+    this.setData({ curCateId: cateId, page: 1 })
+    await this.getGoodsList(true)
+  },
+
+  // 占位方法：声明接收e，解决赋值类型不匹配
+  changeCate(e: WechatMiniprogram.Touch) {},
+
+  async initPage() {
+    await this.getCategory()
+    this.getGoodsList(true)
+  },
+
+  async getCategory() {
+    const list = await getCategoryListApi()
+    this.setData({ categoryList: list })
+  },
+
+  async getGoodsList(isReset: boolean) {
+    const { page, pageSize, curCateId, goodsList } = this.data
+    const params: PageParams = {
+      page,
+      pageSize,
+      categoryId: curCateId 
     }
-    // 订阅用户状态变化（登录，退出会自动更新页面）
-    this.unwatchUser = userStore.watch((newUser) => {
-      this.setData({user:newUser})
+    const res = await getGoodsListApi(params)
+    const newList = isReset ? res.list : [...goodsList, ...res.list]
+    this.setData({
+      goodsList: newList,
+      hasMore: res.hasMore,
+      refreshing: false
     })
-    // 测试拉取用户信息，自动存入store
-    // this.testRequest()
-    // 金额格式化测试
-    // console.log(formatMoney(99.9)) // ¥99.90
-    // 手机号脱敏
-    // console.log(maskPhone('13800138000')) // 138****0000
-    // 时间戳格式化
-    // console.log(formatTime(Date.now(), 'YYYY-MM-DD'))
-    // 空值判断
-    // console.log(isEmpty([])) // true
   },
-  // 搜索防抖示例（模拟搜索输入）
-  handleSearch: debounce(function (e: WechatMiniprogram.Input) {
-    const val = e.detail.value
-    console.log('搜索关键词：', val)
-  }, 400),
 
-  // 节流示例（上拉加载）
-  handleScrollBottom: throttle(function () {
-    console.log('触底加载更多商品')
-  }, 600),
-
-  async testRequest(){
-    try{
-      const user = await getUserInfoApi()
-      console.log('用户信息',userStore.state)
-    }catch(err){
-      console.error('接口请求失败',err)
-    }
+  loadMore() {
+    const { page, hasMore } = this.data
+    if (!hasMore) return
+    this.setData({ page: page + 1 })
+    this.getGoodsList(false)
   },
-  handleLogout(){
-    userStore.logout()
-    const user = userStore.state;
-    console.log(user)
+
+  async onRefresh() {
+    this.setData({ refreshing: true, page: 1 })
+    await this.getGoodsList(true)
+  },
+
+  handleAddCart(e: WechatMiniprogram.CustomEvent) {
+    const goods = e.detail
+    wx.showToast({ title: `已添加${goods.title.slice(0,4)}...` })
   }
 })

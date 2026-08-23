@@ -23,3 +23,38 @@ export interface UserInfo {
   avatar:string
   phone:string
 }
+// ============ 新增商品类型 ============
+// 单个商品
+export interface GoodsItem {
+  id: string
+  title: string
+  cover: string
+  price: number
+  originPrice: number
+  sales: number
+  stock: number
+  categoryId: string
+}
+
+// 商品分类
+export interface CategoryItem {
+  id: string
+  name: string
+  icon: string
+}
+
+// 分页请求参数
+export interface PageParams {
+  page: number
+  pageSize: number
+  categoryId: string
+}
+
+// 分页返回结构
+export interface PageResult<T> {
+  list: T[]
+  total: number
+  page: number
+  pageSize: number
+  hasMore: boolean
+}

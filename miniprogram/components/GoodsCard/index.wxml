@@ -1,0 +1,12 @@
+<view class="goods-card">
+  <image class="cover" src="{{item.cover}}" mode="aspectFill"></image>
+  <view class="info">
+    <text class="title">{{item.title}}</text>
+    <view class="price-row">
+      <text class="price">{{priceText}}</text>
+      <text class="origin">{{originPriceText}}</text>
+    </view>
+    <text class="sales">已售{{item.sales}}件</text>
+    <van-button size="mini" type="danger" bindtap="onAddCart">加入购物车</van-button>
+  </view>
+</view>
