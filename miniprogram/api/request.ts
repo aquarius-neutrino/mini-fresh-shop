@@ -6,6 +6,32 @@ import { refreshTokenApi } from './user'
 //环境地址
 const BASE_URL = '/mock/api'
 
+// ========== 新增本地Mock模拟数据 ==========
+const mockData: Record<string, any> = {
+  '/user/login': { token: 'test-token-123', refreshToken: 'refresh-456' },
+  '/user/info': {
+    id: 'u001',
+    nickName: '生鲜用户',
+    avatar: 'https://picsum.photos/id/237/100/100',
+    phone: '13800138000'
+  }
+}
+
+// 封装mock匹配函数
+function tryMock(url: string): ApiRes | null {
+  const apiPath = url.replace(BASE_URL, '')
+  if (mockData[apiPath]) {
+    return {
+      code: 200,
+      msg: 'success',
+      data: mockData[apiPath]
+    }
+  }
+  return null
+}
+// ========================================
+
+
 //刷新token锁，防止并发401重复请求
 let isRefreshing = false
 let waitQueue:Array<(newToken:string)=> void> = []
@@ -13,6 +39,17 @@ let waitQueue:Array<(newToken:string)=> void> = []
 export function request<T>(options:RequestOptions): Promise<T>{
   const token  =  getCache<string>('token')
   return new Promise((resolve,reject) => {
+     // 优先走本地mock，跳过真实网络请求
+     const mockResult = tryMock(options.url)
+     if (mockResult) {
+       if (!options.hideLoading) wx.showLoading({ title: '加载中', mask: true })
+       setTimeout(() => {
+         wx.hideLoading()
+         resolve(mockResult.data as T)
+       }, 600)
+       return
+     }
+     // 下面原有wx.request逻辑不变，保留不动
     const reqConfig: WechatMiniprogram.RequestOption = {
       url:BASE_URL + options.url,
       method:options.method || 'GET',

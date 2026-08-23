@@ -23,15 +23,15 @@ Page({
       this.setData({user:newUser})
     })
     // 测试拉取用户信息，自动存入store
-    this.testRequest()
+    // this.testRequest()
     // 金额格式化测试
-    console.log(formatMoney(99.9)) // ¥99.90
+    // console.log(formatMoney(99.9)) // ¥99.90
     // 手机号脱敏
-    console.log(maskPhone('13800138000')) // 138****0000
+    // console.log(maskPhone('13800138000')) // 138****0000
     // 时间戳格式化
-    console.log(formatTime(Date.now(), 'YYYY-MM-DD'))
+    // console.log(formatTime(Date.now(), 'YYYY-MM-DD'))
     // 空值判断
-    console.log(isEmpty([])) // true
+    // console.log(isEmpty([])) // true
   },
   // 搜索防抖示例（模拟搜索输入）
   handleSearch: debounce(function (e: WechatMiniprogram.Input) {
@@ -54,5 +54,7 @@ Page({
   },
   handleLogout(){
     userStore.logout()
+    const user = userStore.state;
+    console.log(user)
   }
 })
