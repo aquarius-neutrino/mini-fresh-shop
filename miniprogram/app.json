@@ -12,6 +12,10 @@
       "pages": [
         "index"
       ]
+    },
+    {
+      "root": "subPackages/checkout",
+      "pages": ["index"]
     }
   ],
   "window": {

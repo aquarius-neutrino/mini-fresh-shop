@@ -6,6 +6,7 @@ type PageData = {
   showSheet: boolean
   currentId: string
   actionList: { name: string; value: string; color?: string }[]
+  fromCheckout: boolean // 标记是否从结算页跳转过来
 }
 type PageMethods = {
   loadData: () => void
@@ -24,11 +25,15 @@ Page<PageData, PageMethods>({
     actionList: [
       { name: '编辑', value: 'edit' },
       { name: '删除', value: 'del', color: '#ee0a24' }
-    ]
+    ],
+    fromCheckout: false
   },
 
-  onLoad() {
+  onLoad(opt: Record<string, string | undefined>) {
     this.loadData()
+    if (opt.from === 'checkout') {
+      this.setData({ fromCheckout: true })
+    }
   },
   onShow() {
     this.loadData()
@@ -44,6 +49,16 @@ Page<PageData, PageMethods>({
 
   toEdit(e: WechatMiniprogram.TouchEvent) {
     const id = e.currentTarget.dataset.id as string
+    const { addressList, fromCheckout } = this.data
+    const targetAddr = addressList.find(item => item.id === id)
+  
+    // 如果是结算页过来：存入临时缓存，返回结算页
+    if (fromCheckout && targetAddr) {
+      wx.setStorageSync('temp_select_address', targetAddr)
+      wx.navigateBack()
+      return
+    }
+    // 正常流程：跳转地址编辑页面
     wx.navigateTo({ url: `./edit?id=${id}` })
   },
 

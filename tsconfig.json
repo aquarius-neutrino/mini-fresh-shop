@@ -3,7 +3,7 @@
     "target": "ES6",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "lib": ["ES6", "DOM"],
+    "lib": ["ES2016", "DOM"],
     "strict": true,
     "typeRoots": ["./node_modules/miniprogram-api-typings", "./typings"],
     "types": ["miniprogram-api-typings"],

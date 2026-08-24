@@ -7,10 +7,6 @@
   </view>
   <van-icon name="arrow" class="addr-arrow"/>
 </view>
-<view class="address-block empty-addr" wx:else bindtap="goSelectAddress">
-  <text>请选择收货地址</text>
-  <van-icon name="arrow" class="addr-arrow"/>
-</view>
 <view wx:if="{{cartList.length === 0}}" class="empty-box">
   <text>购物车暂无商品</text>
 </view>

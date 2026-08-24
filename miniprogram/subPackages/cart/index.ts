@@ -55,12 +55,16 @@ Page({
 
   // 去结算
   goPay() {
-    const num = cartStore.getSelectedCount()
-    if (num === 0) {
-      wx.showToast({ title: '请选择商品', icon: 'none' })
-      return
-    }
-    wx.showToast({ title: '跳转结算页' })
-    // navigateTo('/subPackages/pay/index')
+    const { cartList } = this.data
+  // 筛选勾选商品
+  const selectedGoods = cartList.filter(item => item.selected)
+  if (selectedGoods.length === 0) {
+    return wx.showToast({ title: '请选择要结算的商品', icon: 'none' })
+  }
+  // 拼接id逗号分隔传递给结算页
+  const ids = selectedGoods.map(i => i.id).join(',')
+  wx.navigateTo({
+    url: `/subPackages/checkout/index?ids=${ids}`
+  })
   },
 })

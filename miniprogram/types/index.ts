@@ -68,3 +68,8 @@ export interface AddressItem {
   detail: string
   isDefault: boolean
 }
+// 新增购物车CartItem类型
+export interface CartItem extends GoodsItem {
+  count: number
+  selected: boolean
+}

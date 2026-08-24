@@ -61,7 +61,7 @@ Page<PageData,PageMethods>({
     const { form, editId } = this.data
     if (!form.name) return wx.showToast({ title: '请填写姓名', icon: 'none' })
     if (!/^1\d{10}$/.test(form.phone)) return wx.showToast({ title: '手机号格式错误', icon: 'none' })
-    if (!form.province) return wx.showToast({ title: '请选择省市区', icon: 'none' })
+    // if (!form.province) return wx.showToast({ title: '请选择省市区', icon: 'none' })
     if (!form.detail) return wx.showToast({ title: '请填写详细地址', icon: 'none' })
 
     if (editId) {

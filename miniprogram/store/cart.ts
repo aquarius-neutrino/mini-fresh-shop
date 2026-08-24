@@ -2,7 +2,6 @@
 import { GoodsItem } from '../types'
 import { setCache, getCache } from '../utils/cache'
 import { formatMoney } from '../utils/common'
-
 // 购物车单项
 export interface CartItem extends GoodsItem {
   count: number

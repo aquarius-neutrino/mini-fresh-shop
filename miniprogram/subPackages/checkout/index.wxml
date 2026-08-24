@@ -1,0 +1,44 @@
+<!-- 收货地址区域 -->
+<view class="address-card" wx:if="{{selectedAddress}}" bindtap="goSelectAddress">
+  <view class="addr-top">
+    <text class="name">{{selectedAddress.name}}</text>
+    <text class="phone">{{selectedAddress.phone}}</text>
+  </view>
+  <view class="addr-detail">
+    {{selectedAddress.province}}{{selectedAddress.city}}{{selectedAddress.district}}{{selectedAddress.detail}}
+  </view>
+  <van-icon name="arrow" class="arrow-right" />
+</view>
+<view class="address-card empty-tip" wx:else bindtap="goSelectAddress">
+  <text>请选择收货地址</text>
+  <van-icon name="arrow" class="arrow-right" />
+</view>
+
+<!-- 商品列表 -->
+<van-cell-group>
+  <block wx:for="{{checkoutGoodsList}}" wx:key="id">
+    <van-cell>
+      <view slot="title" class="goods-row">
+        <van-image width="120rpx" height="120rpx" src="{{item.image}}" fit="aspectFill" />
+        <view class="goods-info">
+          <text class="title">{{item.title}}</text>
+          <text class="price">¥{{item.price}}</text>
+          <text class="count">x{{item.count}}</text>
+        </view>
+      </view>
+    </van-cell>
+  </block>
+</van-cell-group>
+
+<!-- 金额汇总 -->
+<van-cell-group class="total-block">
+  <van-cell title="商品合计" value="¥{{totalMoney}}" />
+  <van-cell title="运费" value="¥0" />
+  <van-cell title="实付" value="¥{{totalMoney}}" value-class="price-red" />
+</van-cell-group>
+
+<!-- 底部提交订单栏 -->
+<view class="submit-bar">
+  <view class="total-text">实付：<text class="red">¥{{totalMoney}}</text></view>
+  <van-button type="primary" bindtap="submitOrder" class="submit-btn">提交订单</van-button>
+</view>
