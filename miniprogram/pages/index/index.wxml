@@ -1,5 +1,7 @@
 <!-- 分类横向滚动 -->
-<van-button bindtap="toCart" style="margin-left:300px;color:red;">去购物车</van-button>
+<van-button bindtap="toOrder" >我的订单</van-button>
+<van-button bindtap="toAddress" style="margin-left:50px;">收货地址</van-button>
+<van-button bindtap="toCart" style="margin-left:150px;color:red;">去购物车</van-button>
 <scroll-view scroll-x class="category-scroll">
   <view class="category-list">
     <view 

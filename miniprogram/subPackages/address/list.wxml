@@ -2,7 +2,7 @@
   <text>暂无收货地址</text>
 </view>
 <van-cell-group wx:else>
-  <van-cell wx:for="{{ addressList }}" wx:key="id" bind:click="toEdit" data-id="{{item.id}}">
+  <van-cell wx:for="{{ addressList }}" wx:key="id" data-id="{{item.id}}">
     <view slot="title">{{item.name}} {{item.phone}}</view>
     <view slot="label">
       {{item.province}}{{item.city}}{{item.district}}{{item.detail}}
@@ -13,7 +13,13 @@
 </van-cell-group>
 
 <van-button type="primary" bindtap="toAdd" class="add-btn">新增收货地址</van-button>
-
-<van-popup show="{{ showSheet }}" position="bottom" bind:close="closeSheet">
-  <van-action-sheet actions="{{ actionList }}" bind:select="onSheetSelect" cancel-text="取消" />
-</van-popup>
+<!-- 点击右侧三点触发底部弹窗容器 -->
+<!-- 移除van-popup，直接使用van-action-sheet -->
+<van-action-sheet 
+  show="{{ showSheet }}"
+  actions="{{ actionList }}" 
+  bind:select="onSheetSelect" 
+  bind:close="closeSheet"
+  bind:cancel="closeSheet"
+  cancel-text="取消" 
+/>

@@ -1,0 +1,26 @@
+<!-- 收货地址 -->
+<view class="addr-card">
+  <text class="name">{{order.address.name}} {{order.address.phone}}</text>
+  <text class="addr-text">{{order.address.province}}{{order.address.city}}{{order.address.district}}{{order.address.detail}}</text>
+</view>
+
+<!-- 商品列表 -->
+<van-cell-group>
+  <van-cell wx:for="{{order.goodsList}}" wx:key="id">
+    <view slot="title" class="goods-row">
+      <van-image width="120rpx" height="120rpx" src="{{item.cover}}" fit="aspectFill"/>
+      <view class="info">
+        <text>{{item.title}}</text>
+        <text>¥{{item.price}} × {{item.count}}</text>
+      </view>
+    </view>
+  </van-cell>
+</van-cell-group>
+
+<!-- 订单信息 -->
+<van-cell-group class="info-group">
+  <van-cell title="订单编号" value="{{order.orderId}}" />
+  <van-cell title="下单时间" value="{{order.createTime}}" />
+  <van-cell title="订单状态" value="{{order.status === 0 ? '待付款' : '已完成'}}" />
+  <van-cell title="实付金额" value="¥{{order.totalPrice}}" value-class="price-red" />
+</van-cell-group>

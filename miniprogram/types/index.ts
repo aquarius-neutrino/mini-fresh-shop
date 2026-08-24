@@ -73,3 +73,17 @@ export interface CartItem extends GoodsItem {
   count: number
   selected: boolean
 }
+// 订单商品子项
+export interface OrderGoodsItem extends GoodsItem {
+  count: number
+}
+
+// 订单主结构
+export interface OrderItem {
+  orderId: string
+  createTime: string
+  totalPrice: number
+  status: 0 | 1 | 2 // 0待付款 1已完成 2已取消
+  address: AddressItem
+  goodsList: OrderGoodsItem[]
+}

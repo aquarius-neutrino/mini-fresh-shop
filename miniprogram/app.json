@@ -16,6 +16,10 @@
     {
       "root": "subPackages/checkout",
       "pages": ["index"]
+    },
+    {
+      "root": "subPackages/order",
+      "pages": ["list", "detail"]
     }
   ],
   "window": {

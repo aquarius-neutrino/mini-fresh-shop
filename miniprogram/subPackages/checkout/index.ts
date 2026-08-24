@@ -1,8 +1,7 @@
-import type { CartItem } from '../../types'
-import type { AddressItem } from '../../types'
+import type { CartItem, OrderGoodsItem, AddressItem} from '../../types'
 import { cartStore } from '../../store/cart'
 import { formatMoney } from '../../utils/common'
-
+import { createNewOrder } from '../../utils/orderStorage'
 type PageData = {
   checkoutGoodsList: CartItem[]
   totalMoney: number
@@ -69,15 +68,26 @@ Page<PageData, PageMethods>({
     wx.showLoading({ title: '提交中...' })
     setTimeout(() => {
       wx.hideLoading()
-      wx.showToast({ title: '下单成功' })
+      // 1. 创建订单存入本地
+    createNewOrder(checkoutGoodsList as OrderGoodsItem[], selectedAddress, totalMoney)
       // 清空临时地址缓存
       wx.removeStorageSync('temp_select_address')
       // 删除购物车已结算商品
       cartStore.deleteSelected()
       // 跳转到订单页（后续补充订单分包）
-      setTimeout(() => {
-        wx.redirectTo({ url: '/pages/index/index' })
-      }, 1200)
+      wx.showModal({
+        title: '下单成功',
+        content: '是否前往订单查看？',
+        confirmText: '查看订单',
+        cancelText: '返回首页',
+        success: res => {
+          if (res.confirm) {
+            wx.redirectTo({ url: '/subPackages/order/list' })
+          } else {
+            wx.redirectTo({ url: '/pages/index/index' })
+          }
+        }
+      })
     }, 1000)
   }
 })

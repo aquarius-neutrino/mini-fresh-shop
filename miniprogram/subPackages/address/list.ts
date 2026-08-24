@@ -5,7 +5,7 @@ type PageData = {
   addressList: AddressItem[]
   showSheet: boolean
   currentId: string
-  actionList: { name: string; value: string; color?: string }[]
+  actionList: Array<{ name: string; value: string; color?: string }>
   fromCheckout: boolean // 标记是否从结算页跳转过来
 }
 type PageMethods = {
@@ -68,6 +68,7 @@ Page<PageData, PageMethods>({
   },
 
   closeSheet() {
+    console.log('执行关闭');
     this.setData({ showSheet: false })
   },
 

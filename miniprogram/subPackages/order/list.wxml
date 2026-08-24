@@ -1,0 +1,30 @@
+<van-tabs active="{{activeTab}}" bind:change="tabChange">
+  <van-tab title="全部" />
+  <van-tab title="待付款" />
+  <van-tab title="已完成" />
+</van-tabs>
+
+<view wx:if="{{filterOrderList.length === 0}}" class="empty">
+  <text>暂无订单</text>
+</view>
+
+<view wx:else class="order-wrap">
+  <view wx:for="{{filterOrderList}}" wx:key="orderId" class="order-card" bindtap="toDetail" data-id="{{item.orderId}}">
+    <view class="order-top">
+      <text>订单号：{{item.orderId}}</text>
+      <text wx:if="{{item.status === 0}}" class="status-red">待付款</text>
+      <text wx:if="{{item.status === 1}}" class="status-green">已完成</text>
+    </view>
+    <view class="goods-item" wx:for="{{item.goodsList}}" wx:key="id">
+      <van-image width="100rpx" height="100rpx" src="{{item.cover}}" fit="aspectFill"/>
+      <view class="goods-info">
+        <text>{{item.title}}</text>
+        <text>¥{{item.price}} × {{item.count}}</text>
+      </view>
+    </view>
+    <view class="order-bottom">
+      <text>实付：<text class="red">¥{{item.totalPrice}}</text></text>
+      <van-button wx:if="{{item.status === 0}}" size="small" type="primary" catchtap="payOrder" data-id="{{item.orderId}}">去支付</van-button>
+    </view>
+  </view>
+</view>

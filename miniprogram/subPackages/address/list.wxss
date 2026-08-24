@@ -1,1 +1,8 @@
 /* subPackages/address/list.wxss */
+.add-btn{
+  margin: 40rpx 180rpx;
+}
+/* 穿透vant组件，强制设置最小高度 */
+::v-deep van-action-sheet {
+  min-height: 300rpx;
+}

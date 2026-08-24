@@ -23,7 +23,9 @@ type PageMethods = {
   loadMore: () => void
   onRefresh: () => Promise<void>
   handleAddCart: (e: WechatMiniprogram.CustomEvent) => void
-  toCart:()=>void
+  toCart:()=>void,
+  toOrder:()=>void,
+  toAddress:()=>void
 }
 
 // Page仅2个泛型参数 <Data, Methods>
@@ -47,6 +49,16 @@ Page<PageData, PageMethods>({
   toCart() {
     wx.navigateTo({
       url: '/subPackages/cart/index'
+    })
+  },
+  toOrder(){
+    wx.navigateTo({
+      url: '/subPackages/order/list'
+    })
+  },
+  toAddress(){
+    wx.navigateTo({
+      url: '/subPackages/address/list'
     })
   },
   // 真实分类切换逻辑
