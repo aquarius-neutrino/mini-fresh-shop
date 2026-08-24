@@ -7,7 +7,7 @@ Page({
     cartList: [] as CartItem[],
     isAllSelected: false,
     totalPrice: '',
-    selectedNum: 0
+    selectedNum: 0,
   },
   unwatchCart: null as (() => void) | null,
 
@@ -62,5 +62,5 @@ Page({
     }
     wx.showToast({ title: '跳转结算页' })
     // navigateTo('/subPackages/pay/index')
-  }
+  },
 })

@@ -49,3 +49,18 @@
   font-weight: bold;
   font-size: 32rpx;
 }
+.address-block{
+  padding:24rpx;
+  background:#fff;
+  margin-bottom:20rpx;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.empty-addr{
+  color:#999;
+}
+.addr-info{
+  display:flex;
+  flex-direction:column;
+}

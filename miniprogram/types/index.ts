@@ -58,3 +58,13 @@ export interface PageResult<T> {
   pageSize: number
   hasMore: boolean
 }
+export interface AddressItem {
+  id: string
+  name: string
+  phone: string
+  province: string
+  city: string
+  district: string
+  detail: string
+  isDefault: boolean
+}

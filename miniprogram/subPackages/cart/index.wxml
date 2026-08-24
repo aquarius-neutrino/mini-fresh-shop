@@ -1,3 +1,16 @@
+<!-- ==========新增收货地址区域========== -->
+<view class="address-block" wx:if="{{selectedAddress}}" bindtap="goSelectAddress">
+  <view class="addr-title">收货地址</view>
+  <view class="addr-info">
+    <text>{{selectedAddress.name}} {{selectedAddress.phone}}</text>
+    <text>{{selectedAddress.province}}{{selectedAddress.city}}{{selectedAddress.district}}{{selectedAddress.detail}}</text>
+  </view>
+  <van-icon name="arrow" class="addr-arrow"/>
+</view>
+<view class="address-block empty-addr" wx:else bindtap="goSelectAddress">
+  <text>请选择收货地址</text>
+  <van-icon name="arrow" class="addr-arrow"/>
+</view>
 <view wx:if="{{cartList.length === 0}}" class="empty-box">
   <text>购物车暂无商品</text>
 </view>

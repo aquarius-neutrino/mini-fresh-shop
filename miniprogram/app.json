@@ -4,6 +4,10 @@
   ],
   "subPackages": [
     {
+      "root": "subPackages/address",
+      "pages": ["list", "edit"]
+    },
+    {
       "root": "subPackages/cart",
       "pages": [
         "index"

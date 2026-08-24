@@ -1,0 +1,19 @@
+<view wx:if="{{ addressList.length === 0 }}" class="empty">
+  <text>暂无收货地址</text>
+</view>
+<van-cell-group wx:else>
+  <van-cell wx:for="{{ addressList }}" wx:key="id" bind:click="toEdit" data-id="{{item.id}}">
+    <view slot="title">{{item.name}} {{item.phone}}</view>
+    <view slot="label">
+      {{item.province}}{{item.city}}{{item.district}}{{item.detail}}
+      <text wx:if="{{item.isDefault}}" class="default-tag">默认</text>
+    </view>
+    <view slot="right-icon" bindtap="showOperate" data-id="{{item.id}}">···</view>
+  </van-cell>
+</van-cell-group>
+
+<van-button type="primary" bindtap="toAdd" class="add-btn">新增收货地址</van-button>
+
+<van-popup show="{{ showSheet }}" position="bottom" bind:close="closeSheet">
+  <van-action-sheet actions="{{ actionList }}" bind:select="onSheetSelect" cancel-text="取消" />
+</van-popup>
