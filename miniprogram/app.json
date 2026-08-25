@@ -1,17 +1,16 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",     
+    "pages/dummy/dummy"
   ],
   "subPackages": [
     {
-      "root": "subPackages/address",
-      "pages": ["list", "edit"]
+      "root": "subPackages/cart",
+      "pages": ["index"]
     },
     {
-      "root": "subPackages/cart",
-      "pages": [
-        "index"
-      ]
+      "root": "subPackages/address",
+      "pages": ["list", "edit"]
     },
     {
       "root": "subPackages/checkout",
@@ -22,12 +21,31 @@
       "pages": ["list", "detail"]
     }
   ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "wifi",
+      "packages": ["subPackages/cart"]
+    }
+  },
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "生鲜团购商城",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "生鲜团购",
-    "navigationBarBackgroundColor": "#ffffff"
+    "backgroundColor": "#f5f5f5"
   },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/dummy/dummy",
+        "text": "占位"
+      }
+    ]
+  }
 }
