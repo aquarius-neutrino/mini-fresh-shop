@@ -5,6 +5,7 @@ import { cartStore } from '../../store/cart'
 import { safeNavigate } from '../../utils/routeGuard'
 import { trackPageView } from '../../utils/track'
 import { trackGoodsClick } from '../../utils/track'
+import { checkNetwork, watchNetworkChange, unWatchNetworkChange } from '../../utils/network'
 // 页面data类型
 type PageData = {
   categoryList: CategoryItem[]
@@ -14,6 +15,7 @@ type PageData = {
   pageSize: number
   hasMore: boolean
   refreshing: boolean
+  isOffline: boolean
 }
 
 // 页面所有方法类型约束
@@ -28,7 +30,8 @@ type PageMethods = {
   handleAddCart: (e: WechatMiniprogram.CustomEvent) => void
   toCart:()=>void,
   toOrder:()=>void,
-  toAddress:()=>void
+  toAddress:()=>void,
+  onRefreshPage:()=>void
 }
 
 // Page仅2个泛型参数 <Data, Methods>
@@ -41,13 +44,44 @@ Page<PageData, PageMethods>({
     pageSize: 6,
     hasMore: true,
     refreshing: false,
-
+    isOffline: false
   },
 
   onLoad() {
+    // 页面加载先检测一次网络
+    checkNetwork().then((hasNet) => {
+      this.setData({ isOffline: !hasNet })
+    })
+
+    // 监听网络变化
+    watchNetworkChange(
+      // 断网
+      () => this.setData({ isOffline: true }),
+      // 恢复网络
+      () => {
+        this.setData({ isOffline: false })
+        // 自动重新加载页面数据
+        this.getGoodsList(true)
+      }
+    )
     this.initPage()
     // 此处无红线，类型完全匹配
     this.changeCate = debounce(this.handleCateChange.bind(this), 300)
+  },
+  onUnload() {
+    // 页面销毁取消监听，避免多个页面重复监听
+    unWatchNetworkChange()
+  },
+  // 离线组件点击刷新
+  onRefreshPage() {
+    checkNetwork().then(async (hasNet) => {
+      if (hasNet) {
+        this.setData({ isOffline: false })
+        await this.getGoodsList(true)
+      } else {
+        wx.showToast({ title: '仍未检测到网络', icon: 'none' })
+      }
+    })
   },
   // 记录一次页面曝光
   onShow() {

@@ -1,3 +1,4 @@
+<OfflineTip show="{{ isOffline }}" bind:refresh="onRefreshPage" />
 <!-- 分类横向滚动 -->
 <van-button bindtap="toOrder" >我的订单</van-button>
 <van-button bindtap="toAddress" style="margin-left:50px;">收货地址</van-button>

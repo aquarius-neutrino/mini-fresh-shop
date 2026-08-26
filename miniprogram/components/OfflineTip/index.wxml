@@ -1,0 +1,5 @@
+<view class="offline-wrap" wx:if="{{ show }}">
+  <text class="offline-icon">📶</text>
+  <text class="text">当前无网络，请检查网络后重试</text>
+  <van-button size="small" bindtap="onRefresh">刷新重试</van-button>
+</view>
