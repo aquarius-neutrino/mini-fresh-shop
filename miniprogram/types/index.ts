@@ -18,10 +18,9 @@ export interface TokenInfo {
 }
 // 用户信息
 export interface UserInfo {
-  id:string
-  nickName:string
-  avatar:string
-  phone:string
+  token: string
+  phone: string
+  pwd: string
 }
 // ============ 新增商品类型 ============
 // 单个商品

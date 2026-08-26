@@ -1,0 +1,15 @@
+.login-wrap {
+  padding: 80rpx 40rpx;
+}
+.title {
+  font-size: 40rpx;
+  text-align: center;
+  margin-bottom: 80rpx;
+  font-weight: bold;
+}
+.login-btn {
+  margin-top: 60rpx;
+}
+.reg-btn {
+  margin-top: 30rpx;
+}

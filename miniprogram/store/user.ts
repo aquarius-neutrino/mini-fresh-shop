@@ -13,8 +13,23 @@ let userState: UserInfo | null = getCache<UserInfo>('userInfo')
 const watchCallbacks: Array<(user:UserInfo | null )=> void> = []
 export const userStore = {
   // 获取当前用户
-  get state():UserInfo | null{
+  getUserInfo():UserInfo | null{
     return userState
+  },
+  // 按手机号查询用户（注册/登录校验）
+  getUserByPhone(phone: string): UserInfo | undefined {
+    const list = getCache<UserInfo[]>('userInfo') || []
+    return list.find(item => item.phone === phone)
+  },
+  // 注册账号
+  register(info: Omit<UserInfo, 'token'>) {
+    const list = getCache<UserInfo[]>('userInfo') || []
+    const newUser: UserInfo = {
+      ...info,
+      token: Date.now().toString()
+    }
+    list.push(newUser)
+    setCache('userInfo', list)
   },
   // 登录：保存用户信息到内存➕本地缓存
   setUser(info : UserInfo){

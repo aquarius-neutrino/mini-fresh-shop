@@ -1,6 +1,6 @@
 import type { OrderItem } from '../../types'
 import { getOrderList, changeOrderStatus } from '../../utils/orderStorage'
-
+import { safeNavigate } from '../../utils/routeGuard'
 type PageData = {
   activeTab: number
   allOrderList: OrderItem[]
@@ -53,7 +53,7 @@ Page<PageData, PageMethods>({
 
   toDetail(e: WechatMiniprogram.TouchEvent) {
     const orderId = e.currentTarget.dataset.id as string
-    wx.navigateTo({ url: `./detail?id=${orderId}` })
+    safeNavigate(`/subPackages/order/detail?id=${orderId}`)
   },
 
   payOrder(e: WechatMiniprogram.BaseEvent) {

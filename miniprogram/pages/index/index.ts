@@ -2,6 +2,7 @@ import { getGoodsListApi, getCategoryListApi } from '../../api/goods'
 import { debounce } from '../../utils/common'
 import type { GoodsItem, CategoryItem, PageParams } from '../../types'
 import { cartStore } from '../../store/cart'
+import { safeNavigate } from '../../utils/routeGuard'
 // 页面data类型
 type PageData = {
   categoryList: CategoryItem[]
@@ -47,19 +48,19 @@ Page<PageData, PageMethods>({
   },
   // 跳转购物车
   toCart() {
-    wx.navigateTo({
-      url: '/subPackages/cart/index'
-    })
+    safeNavigate(
+      '/subPackages/cart/index'
+    )
   },
   toOrder(){
-    wx.navigateTo({
-      url: '/subPackages/order/list'
-    })
+    safeNavigate(
+      '/subPackages/order/list'
+    )
   },
   toAddress(){
-    wx.navigateTo({
-      url: '/subPackages/address/list'
-    })
+    safeNavigate(
+      '/subPackages/address/list'
+    )
   },
   // 真实分类切换逻辑
   async handleCateChange(e: WechatMiniprogram.Touch) {

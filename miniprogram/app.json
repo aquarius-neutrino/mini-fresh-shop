@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",     
-    "pages/dummy/dummy"
+    "pages/dummy/dummy",
+    "pages/login/index"
   ],
   "subPackages": [
     {

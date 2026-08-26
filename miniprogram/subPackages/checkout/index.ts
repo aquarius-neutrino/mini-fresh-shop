@@ -2,6 +2,7 @@ import type { CartItem, OrderGoodsItem, AddressItem} from '../../types'
 import { cartStore } from '../../store/cart'
 import { formatMoney } from '../../utils/common'
 import { createNewOrder } from '../../utils/orderStorage'
+import { safeNavigate } from '../../utils/routeGuard'
 type PageData = {
   checkoutGoodsList: CartItem[]
   totalMoney: number
@@ -52,9 +53,7 @@ Page<PageData, PageMethods>({
 
   // 跳转地址列表，携带来源标记
   goSelectAddress() {
-    wx.navigateTo({
-      url: '/subPackages/address/list?from=checkout'
-    })
+    safeNavigate('/subPackages/address/list?from=checkout')
   },
 
   // 提交订单
