@@ -3,6 +3,7 @@ import { cartStore } from '../../store/cart'
 import { formatMoney } from '../../utils/common'
 import { createNewOrder } from '../../utils/orderStorage'
 import { safeNavigate } from '../../utils/routeGuard'
+import { trackSubmitOrder } from '../../utils/track'
 type PageData = {
   checkoutGoodsList: CartItem[]
   totalMoney: number
@@ -68,7 +69,14 @@ Page<PageData, PageMethods>({
     setTimeout(() => {
       wx.hideLoading()
       // 1. 创建订单存入本地
-    createNewOrder(checkoutGoodsList as OrderGoodsItem[], selectedAddress, totalMoney)
+    const newOrder = createNewOrder(checkoutGoodsList as OrderGoodsItem[], selectedAddress, totalMoney)
+    // ========== 新增下单埋点 ==========
+    trackSubmitOrder(
+      newOrder.orderId,
+      newOrder.totalPrice,
+      newOrder.goodsList.length,
+      '/subPackages/checkout/index'
+    )
       // 清空临时地址缓存
       wx.removeStorageSync('temp_select_address')
       // 删除购物车已结算商品

@@ -3,6 +3,8 @@ import { debounce } from '../../utils/common'
 import type { GoodsItem, CategoryItem, PageParams } from '../../types'
 import { cartStore } from '../../store/cart'
 import { safeNavigate } from '../../utils/routeGuard'
+import { trackPageView } from '../../utils/track'
+import { trackGoodsClick } from '../../utils/track'
 // 页面data类型
 type PageData = {
   categoryList: CategoryItem[]
@@ -38,13 +40,18 @@ Page<PageData, PageMethods>({
     page: 1,
     pageSize: 6,
     hasMore: true,
-    refreshing: false
+    refreshing: false,
+
   },
 
   onLoad() {
     this.initPage()
     // 此处无红线，类型完全匹配
     this.changeCate = debounce(this.handleCateChange.bind(this), 300)
+  },
+  // 记录一次页面曝光
+  onShow() {
+    trackPageView('/pages/index/index')
   },
   // 跳转购物车
   toCart() {
@@ -112,6 +119,7 @@ Page<PageData, PageMethods>({
 
   handleAddCart(e: WechatMiniprogram.CustomEvent) {
     const goods = e.detail as GoodsItem
+    trackGoodsClick(goods.id, goods.title, '/pages/index/index')
     cartStore.addGoods(goods)
     wx.showToast({ title: `已添加${goods.title.slice(0,6)}...` })
   },

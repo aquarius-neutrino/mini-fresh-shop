@@ -11,7 +11,7 @@ type PageData = {
 type PageMethods = {
   loadData: () => void
   toAdd: () => void
-  toEdit: (e: WechatMiniprogram.TouchEvent) => void
+  toAddOrderAddr: (e: WechatMiniprogram.TouchEvent) => void
   showOperate: (e: WechatMiniprogram.TouchEvent) => void
   closeSheet: () => void
   onSheetSelect: (e: WechatMiniprogram.BaseEvent) => void
@@ -47,7 +47,7 @@ Page<PageData, PageMethods>({
     wx.navigateTo({ url: './edit' })
   },
 
-  toEdit(e: WechatMiniprogram.TouchEvent) {
+  toAddOrderAddr(e: WechatMiniprogram.TouchEvent) {
     const id = e.currentTarget.dataset.id as string
     const { addressList, fromCheckout } = this.data
     const targetAddr = addressList.find(item => item.id === id)

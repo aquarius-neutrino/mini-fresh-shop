@@ -2,6 +2,7 @@ import { cartStore } from '../../store/cart'
 import { formatMoney } from '../../utils/common'
 import type { CartItem } from '../../store/cart'
 
+
 Page({
   data: {
     cartList: [] as CartItem[],
