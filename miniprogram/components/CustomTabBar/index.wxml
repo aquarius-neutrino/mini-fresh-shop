@@ -1,0 +1,17 @@
+<view class="tabbar-wrap">
+  <!-- 首页 -->
+  <view class="tab-item" bindtap="switchTab" data-path="/pages/index/index">
+    <text class="tab-icon {{activePath === '/pages/index/index' ? 'active' : ''}}">首页</text>
+    <text class="tab-text {{activePath === '/pages/index/index' ? 'active' : ''}}">首页</text>
+  </view>
+  <!-- 购物车（分包） -->
+  <view class="tab-item" bindtap="switchTab" data-path="/subPackages/cart/index">
+    <text class="tab-icon {{activePath === '/subPackages/cart/index' ? 'active' : ''}}">购物车</text>
+    <text class="tab-text {{activePath === '/subPackages/cart/index' ? 'active' : ''}}">购物车</text>
+  </view>
+  <!-- 订单（分包） -->
+  <view class="tab-item" bindtap="switchTab" data-path="/subPackages/order/list">
+    <text class="tab-icon {{activePath === '/subPackages/order/list' ? 'active' : ''}}">订单</text>
+    <text class="tab-text {{activePath === '/subPackages/order/list' ? 'active' : ''}}">我的订单</text>
+  </view>
+</view>

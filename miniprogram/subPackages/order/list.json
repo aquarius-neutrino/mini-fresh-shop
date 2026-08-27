@@ -5,6 +5,7 @@
     "van-tab": "@vant/weapp/tab/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-button": "@vant/weapp/button/index",
-    "van-image": "@vant/weapp/image/index"
+    "van-image": "@vant/weapp/image/index",
+    "CustomTabBar":"../../components/CustomTabBar/index"
   }
 }

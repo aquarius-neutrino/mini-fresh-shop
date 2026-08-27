@@ -37,3 +37,4 @@
     <text wx:else>没有更多商品了</text>
   </view>
 </scroll-view>
+<CustomTabBar activePath="/pages/index/index" />

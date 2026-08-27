@@ -30,3 +30,4 @@
     </view>
   </view>
 </view>
+<CustomTabBar activePath="/subPackages/cart/index" />

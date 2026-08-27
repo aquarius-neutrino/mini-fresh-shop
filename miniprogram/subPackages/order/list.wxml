@@ -28,3 +28,4 @@
     </view>
   </view>
 </view>
+<CustomTabBar activePath="/subPackages/order/list" />

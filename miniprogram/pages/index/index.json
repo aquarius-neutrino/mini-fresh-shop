@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "CustomTabBar":"../../components/CustomTabBar/index",
     "GoodsCard": "../../components/GoodsCard/index",
     "OfflineTip": "../../components/OfflineTip/index"
   }
