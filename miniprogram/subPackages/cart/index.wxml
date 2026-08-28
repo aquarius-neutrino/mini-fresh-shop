@@ -14,7 +14,7 @@
 <view wx:else>
   <view wx:for="{{cartList}}" wx:key="id" class="cart-item">
     <van-checkbox value="{{item.selected}}" bindchange="toggleSelect" data-id="{{item.id}}"></van-checkbox>
-    <image class="cover" src="{{item.cover}}"></image>
+    <image class="cover" src="{{item.cover}}" mode="aspectFill"></image>
     <view class="info">
       <text class="title">{{item.title}}</text>
       <text class="price">{{formatMoney(item.price)}}</text>

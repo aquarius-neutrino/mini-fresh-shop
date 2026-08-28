@@ -1,7 +1,7 @@
 import { cartStore } from '../../store/cart'
 import { formatMoney } from '../../utils/common'
 import type { CartItem } from '../../store/cart'
-
+import { getThumbImage } from '../../utils/imgOpt'
 
 Page({
   data: {
@@ -18,7 +18,15 @@ Page({
       this.setCartData(list)
     })
   },
-
+  onShow() {
+    const rawList = cartStore.list
+    // 批量预计算缩略图
+    const cartList = rawList.map(item => ({
+      ...item,
+      thumb: getThumbImage(item.cover)
+    }))
+    this.setData({ cartList })
+  },
   onUnload() {
     // 销毁订阅，防止内存泄漏
     if (this.unwatchCart) this.unwatchCart()
